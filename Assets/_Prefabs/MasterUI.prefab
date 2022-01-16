@@ -168,7 +168,7 @@ GameObject:
   - component: {fileID: 224547425333513818}
   - component: {fileID: 114579701219743802}
   m_Layer: 5
-  m_Name: DesktopUI
+  m_Name: MasterUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

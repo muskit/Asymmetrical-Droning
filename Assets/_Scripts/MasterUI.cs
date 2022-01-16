@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace AsymmetricalDroning
+namespace muskit
 {
 	public class MasterUI : MonoBehaviour
 	{
@@ -31,10 +31,10 @@ namespace AsymmetricalDroning
 
 			uiMouseSpeedSlider = transform.FindDeepChild("MouseSpeed Slider").GetComponent<Slider>();
 			uiMouseSpeedSlider.onValueChanged.AddListener(OnMouseSpeedSliderChg);
-			uiMouseSpeedSlider.value = MeatKitPlugin.mouseSpeed;
 			uiMouseSpeedEntry = transform.FindDeepChild("MouseSpeed Entry").GetComponent<InputField>();
-			uiMouseSpeedEntry.onValueChanged.AddListener(OnMouseSpeedEntryChg);
+			uiMouseSpeedEntry.onEndEdit.AddListener(OnMouseSpeedEntryDoneEditing);
 			uiMouseSpeedEntry.text = MeatKitPlugin.mouseSpeed.ToString("F");
+			uiMouseSpeedSlider.value = MeatKitPlugin.mouseSpeed;
 
 			curAsymType = -1;
 			SetDesktopUIEnable(false);
@@ -86,12 +86,14 @@ namespace AsymmetricalDroning
 
 		public void OnMouseSpeedSliderChg(float newValue)
         {
+			Debug.Log("[mouse ui] Mouse speed slider changed!");
 			MeatKitPlugin.mouseSpeed = newValue;
 			uiMouseSpeedEntry.text = newValue.ToString("F");
 		}
 		
-		public void OnMouseSpeedEntryChg(string newText)
+		public void OnMouseSpeedEntryDoneEditing(string newText)
         {
+			Debug.Log("[mouse ui] Mouse speed entry changed!");
 			try
 			{
 				float value = float.Parse(newText);
@@ -101,7 +103,10 @@ namespace AsymmetricalDroning
 				uiMouseSpeedEntry.text = value.ToString("F");
 				uiMouseSpeedSlider.value = value;
 			}
-			catch { }
+			catch
+			{
+				uiMouseSpeedEntry.text = uiMouseSpeedSlider.value.ToString("F");
+			}
 		}
 	}
 }

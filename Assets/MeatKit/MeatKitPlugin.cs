@@ -5,7 +5,7 @@ using BepInEx;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-using AsymmetricalDroning;
+using muskit;
 
 /*
  * SUPER LARGE WARNING ABOUT THIS CLASS
@@ -28,6 +28,8 @@ public class MeatKitPlugin : BaseUnityPlugin
 {
     // DO NOT CHANGE OR REMOVE THIS FIELD.
     private static readonly string BasePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
+    private bool initialized = false;
 
     // config options
     public static float mouseSpeed = 1f;
@@ -55,8 +57,9 @@ public class MeatKitPlugin : BaseUnityPlugin
 	{
 		desktopUI = Instantiate(bundle.LoadAsset<GameObject>("MasterUI"));
 		desktopUI.GetComponent<MasterUI>().init(bundle);
-        desktopUI.transform.GetChild(0).gameObject.SetActive(false);
+        desktopUI.transform.GetChild(0).gameObject.SetActive(initialized);
 
+        initialized = true;
 		Logger.LogInfo("\"Finally, multiplayer in H3VR.\"");
 	}
 
@@ -69,6 +72,7 @@ public class MeatKitPlugin : BaseUnityPlugin
 
     private void OnSceneChange(Scene arg0, LoadSceneMode arg1)
     {
+        Destroy(desktopUI);
         Start();
     }
 }
