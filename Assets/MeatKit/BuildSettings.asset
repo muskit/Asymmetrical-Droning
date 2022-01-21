@@ -13,10 +13,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PackageName: Asymmetrical_Droning
   Author: muskit
-  Version: 0.0.1
+  Version: 1.0.0
   Icon: {fileID: 2800000, guid: b8bd76ac1d7a9b142bd9e822c1310cbb, type: 3}
   ReadMe: {fileID: 102900000, guid: 0ef972042aeb3144a87158168db7cdbc, type: 3}
-  WebsiteURL: https://example.com
+  WebsiteURL: https://github.com/muskit/Asymmetrical-Droning
   Description: An asymmetrical multiplayer experience.
   AdditionalDependencies: []
   BuildItems:

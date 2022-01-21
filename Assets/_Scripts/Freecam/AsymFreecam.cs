@@ -11,7 +11,7 @@ namespace muskit
 		public LookMode lookMode;
 		public float baseMoveSpeed;
 
-		private bool cursorLocked;
+		private bool controlEnabled;
 		private Vector2 currentRotation;
 
 		private GameObject vrCamera;
@@ -28,7 +28,7 @@ namespace muskit
 			lookMode = LookMode.Mouse;
 			joystickSpeed = 150;
 			baseMoveSpeed = 2;
-			cursorLocked = false;
+			controlEnabled = false;
 			currentRotation = Vector2.zero;
 
 			vrCamera = GameObject.Find("Camera (head) (eye)");
@@ -69,8 +69,8 @@ namespace muskit
 
 			// Mouse locking
 			if (Input.GetKeyDown("left alt") || Input.GetKeyDown("right alt"))
-				cursorLocked = !cursorLocked;
-			if (cursorLocked)
+				controlEnabled = !controlEnabled;
+			if (controlEnabled)
 			{
 				Cursor.lockState = CursorLockMode.Locked;
 			}
@@ -79,12 +79,14 @@ namespace muskit
 				Cursor.lockState = CursorLockMode.None;
 			}
 
-			Look();
+			if (controlEnabled)
+				Look();
 		}
 
 		private void FixedUpdate()
 		{
-			Move();
+			if (controlEnabled)
+				Move();
 		}
 
 		private void Move()
@@ -139,7 +141,7 @@ namespace muskit
 		private void Look()
 		{
 			// Look
-			if (cursorLocked && lookMode == LookMode.Mouse) // Mouse axes don't require deltaTime
+			if (lookMode == LookMode.Mouse) // Mouse axes don't require deltaTime
 			{
 				currentRotation.x = Mathf.Clamp(currentRotation.x + MeatKitPlugin.mouseSpeed * -Input.GetAxis("Vertical"), -90, 90);
 				currentRotation.y += MeatKitPlugin.mouseSpeed * Input.GetAxis("Horizontal");
